@@ -8,7 +8,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 class State:
-    """Class that holds the state of a board. 
+    """Class that holds the state of a board.
     It holds queen's positions on the board, fitness, and total cost.
     """
 
@@ -20,7 +20,7 @@ class State:
 
     def calculate_heuristic(self) -> int:
         """Function to calculate the fitness of the state.
-        Fitness is calculated as => Number of pairs of queens attacking each other. 
+        Fitness is calculated as => Number of pairs of queens attacking each other.
         """
 
         h: int = 0
@@ -30,15 +30,15 @@ class State:
             fixed_queen_pos: Tuple[int, int] = (self.queen_positions[i], i) # (row, column)
             for j in range(i+1, N):
                 curr_queen_pos: Tuple[int, int] = (self.queen_positions[j], j) # (row, column)
-                
+
                 diagonal_collision_row: int = abs(fixed_queen_pos[0]-curr_queen_pos[0])
                 diagonal_collision_column: int = abs(fixed_queen_pos[1]-curr_queen_pos[1])
 
                 # If a queen pair is not in the same row or diagonal => they are not attacking each other.
                 if fixed_queen_pos[0] != curr_queen_pos[0] and diagonal_collision_row != diagonal_collision_column:
                     h += 1
-        return max_fitness - h  
-    
+        return max_fitness - h
+
     def update_total_cost(self) -> None:
         """Function to update total cost of a state."""
 
@@ -47,7 +47,7 @@ class State:
 
     def __lt__(self, other):
         return self.total_cost < other.total_cost
-    
+
     def __eq__(self, other):
         return self.queen_positions == other.queen_positions
 
@@ -69,7 +69,7 @@ class AStarAlgorithm:
         """Function that generates children of a state.
         It moves a queen's position up or down the column by 1 move and stores it as one of its the many children states.
         """
-    
+
         queen_pos: List[int] = state.queen_positions
         size: int = len(queen_pos)
         children = []
@@ -85,11 +85,11 @@ class AStarAlgorithm:
                 child_state_2 = copy.deepcopy(state)
                 child_state_2.queen_positions[i] = pos + 1
                 child_state_2.heuristic = child_state_2.calculate_heuristic()
-                child_state_2.update_total_cost() 
+                child_state_2.update_total_cost()
                 if child_state_2 not in states and child_state_2 not in visited_states:
                     children.append(child_state_2)
         return children
-    
+
     @staticmethod
     def is_goal_reached(state: State):
         """Function to check if the goal is reached or not."""
@@ -113,7 +113,7 @@ class RunAStarAlgorithm:
         visited_states: List[State] = []
         goal_reached: bool = False
         steps: int = 1
-        
+
         start_time: float = time.time()
 
         initial_state: State = AStarAlgorithm.generate_random_state(N=N_queens)
@@ -144,18 +144,18 @@ class RunAStarAlgorithm:
         # Subtracting 1 if all states are expanded and steps increment (flow above).
         if not goal_reached:
             steps -= 1
-        
+
         print('###########################################')
         print(f'Total Steps = {steps}')
         print(f'Solution = {curr_state}')
         print(f'Time taken = {time_taken} seconds')
-        
-        return [steps, time_taken, goal_reached] 
-        
+
+        return [steps, time_taken, goal_reached]
+
     @staticmethod
     def _save_state_pic(positions: List[int], i: int):
         """Function to plot the chess board along with the position of the queens."""
-        
+
         N: int = len(positions)
         board = np.zeros((N,N,3))
         board += 0.5 # "Black" color. Can also be a sequence of r,g,b with values 0-1.

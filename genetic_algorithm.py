@@ -8,7 +8,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 class State:
-    """Class that holds the state of a board. 
+    """Class that holds the state of a board.
     It holds queen's positions on the board as well as its fitness.
     """
 
@@ -18,7 +18,7 @@ class State:
 
     def calculate_fitness(self) -> int:
         """Function to calculate the fitness of the state.
-        Fitness is calculated as => Number of pairs of queens NOT attacking each other. 
+        Fitness is calculated as => Number of pairs of queens NOT attacking each other.
         """
 
         fitness: int = 0
@@ -27,7 +27,7 @@ class State:
             fixed_queen_pos: Tuple[int, int] = (self.queen_positions[i], i) # (row, column)
             for j in range(i+1, N):
                 curr_queen_pos: Tuple[int, int] = (self.queen_positions[j], j) # (row, column)
-                
+
                 diagonal_collision_row: int = abs(fixed_queen_pos[0]-curr_queen_pos[0])
                 diagonal_collision_column: int = abs(fixed_queen_pos[1]-curr_queen_pos[1])
 
@@ -45,16 +45,16 @@ class Population:
 
     def __init__(self, pop_size: Optional[int] = 4, N: Optional[int] = 4) -> None:
         self.list_of_states: List[State] = [State(N) for i in range(pop_size)]
-    
+
     def __str__(self) -> str:
         for state in self.list_of_states:
             print(state)
         return ''
-    
+
 
 class GeneticAlgorithm:
     """Class that contains all the inner implementations (steps) involved in the Genetic Algorithm."""
-    
+
     @staticmethod
     def get_mating_parents(population: Population, parent_selection_algo: Optional[str] ='RWS') -> Tuple[State, State]:
         """Function to get the best matching parents from the population.
@@ -73,14 +73,14 @@ class GeneticAlgorithm:
             parent1, parent2 = GeneticAlgorithm._rank_selection(population)
 
         return parent1, parent2
-    
+
     @staticmethod
     def _rank_selection(population: Population) -> Tuple[State, State]:
         """Function to perform rank selection method on a population."""
 
         population.list_of_states.sort(key=lambda state: state.fitness)
         return population.list_of_states[-1], population.list_of_states[-2]
-        
+
     @staticmethod
     def _roulette_wheel_selection(population: Population) -> State:
         """Function to perform roulette wheel selection on a population."""
@@ -95,12 +95,12 @@ class GeneticAlgorithm:
             s += state.fitness
             if s >= roulette_pointer:
                 return state
-    
+
     @staticmethod
     def crossover(parent1: State, parent2: State, crossover_method: str) -> Tuple[State, State]:
         """Function to perform crossover between two parents.
         Two crossover methods are used:
-        1. Single point 
+        1. Single point
         2. Two point
         """
 
@@ -117,7 +117,7 @@ class GeneticAlgorithm:
         child1: State = copy.deepcopy(parent1)
         child2: State = copy.deepcopy(parent2)
 
-        split_point: int = random.randint(1, size-1) 
+        split_point: int = random.randint(1, size-1)
 
         child1.queen_positions = parent1.queen_positions[0:split_point] + parent2.queen_positions[split_point:]
         child2.queen_positions = parent2.queen_positions[0:split_point] + parent1.queen_positions[split_point:]
@@ -136,7 +136,7 @@ class GeneticAlgorithm:
 
         point1: int = random.randint(1, size//2)
         point2: int = random.randint(point1+1, size-1)
-        
+
         child1.queen_positions = parent1.queen_positions[0:point1] + parent2.queen_positions[point1:point2] + parent1.queen_positions[point2:]
         child2.queen_positions = parent2.queen_positions[0:point1] + parent1.queen_positions[point1:point2] + parent2.queen_positions[point2:]
 
@@ -160,9 +160,9 @@ class RunGeneticAlgorithm:
     """Class for running the algorithm."""
 
     @staticmethod
-    def run_ga(N_queens: Optional[int] = 4, 
-              init_pop_size: Optional[int] = 10, 
-              max_gen: Optional[int] = 400, 
+    def run_ga(N_queens: Optional[int] = 4,
+              init_pop_size: Optional[int] = 10,
+              max_gen: Optional[int] = 400,
               mutation_prob: Optional[float] = 0.8,
               crossover_method: str = 'SP', # SP or TP
               crossover_rate: float = 0.2,
@@ -189,7 +189,7 @@ class RunGeneticAlgorithm:
         solution_state: Optional[State] = None
         max_fitness = N_queens*(N_queens-1)//2
 
-        start_time: float = time.time() 
+        start_time: float = time.time()
 
         print('---------------------------------------')
         print('Initial Population')
@@ -202,7 +202,7 @@ class RunGeneticAlgorithm:
 
         while gen < max_gen:
             print(f'Generation {gen}:')
-            
+
             if elitism == 'N':
                 # Selecting according to ratio of how many couples will be picked for mating (i.e. crossover_rate).
                 population.list_of_states.sort(key=lambda state: state.fitness)
@@ -211,14 +211,14 @@ class RunGeneticAlgorithm:
             elif elitism == 'Y':
                 population.list_of_states.sort(key=lambda state: state.fitness)
                 population.list_of_states = population.list_of_states[-1:-3:-1] # Taking best two individuals.
-                
+
             parent1, parent2 = GeneticAlgorithm.get_mating_parents(population, parent_selection_algo=parent_selection_algo)
             child1, child2 = GeneticAlgorithm.crossover(parent1, parent2, crossover_method)
-            
+
             if random.random() < mutation_prob:
                 child1 = GeneticAlgorithm.mutate(child1)
                 child2 = GeneticAlgorithm.mutate(child2)
-            
+
             population.list_of_states.extend([child1, child2])
             population.list_of_states.sort(key=lambda state: state.fitness)
             best_state_so_far: State = population.list_of_states[-1]
