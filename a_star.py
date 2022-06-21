@@ -25,7 +25,7 @@ class State:
 
         h: int = 0
         N: int = len(self.queen_positions)
-        max_fitness: int = N*(N-1) // 2
+        max_fitness: int = N*(N-1) // 2 #divisao inteira, sem considerar o resto
         for i in range(N):
             fixed_queen_pos: Tuple[int, int] = (self.queen_positions[i], i) # (row, column)
             for j in range(i+1, N):
@@ -149,6 +149,12 @@ class RunAStarAlgorithm:
         print(f'Total Steps = {steps}')
         print(f'Solution = {curr_state}')
         print(f'Time taken = {time_taken} seconds')
+
+        print(f'All Visited states: ')
+        print(*visited_states, sep='\n ')
+
+        print(f'curr_state  = {type(curr_state)}')
+        print(f'curr_state  = {curr_state}')
 
         return [steps, time_taken, goal_reached]
 

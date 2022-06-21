@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets as qtw, QtCore, QtGui
-from interface import Ui_MainWindow
+from mainUI import Ui_MainWindow
 from PyQt5.QtCore import QThread, QTimer
 import sys, os, glob, PyQt5, time
-from algorithms.a_star import RunAStarAlgorithm
+from a_star import RunAStarAlgorithm
 
 
 # If the resolution is high, then these lines will take care of the UI being displayed properly.
@@ -28,15 +28,6 @@ class MainWindow(qtw.QMainWindow):
         print(self.index)
         self.image_names = []
 
-        # Populating combobox values.
-        self.ui.elitismComboBox.addItem('Y')
-        self.ui.elitismComboBox.addItem('N')
-        self.ui.crossoverTypeComboBox.addItem('SP')
-        self.ui.crossoverTypeComboBox.addItem('TP')
-        self.ui.parentSelectComboBox.addItem('RS')
-        self.ui.parentSelectComboBox.addItem('RWS')
-
-
         self.a_star_thread = None
 
         self.ui.autoTrace.clicked.connect(self.run_auto_trace)
@@ -47,8 +38,6 @@ class MainWindow(qtw.QMainWindow):
 
         self.ui.runAStarButton.clicked.connect(self.run_a_star)
         self.ui.stopastarButton.clicked.connect(self.stop_a_star_thread)
-
-
 
         self.ui.resetButton.clicked.connect(self.reset)
 
@@ -189,20 +178,7 @@ class MainWindow(qtw.QMainWindow):
         """Function to display initial instructions again."""
 
         _translate = QtCore.QCoreApplication.translate
-        text = '''
-        <html><head/><body><p align="justify"><span style=" font-size:12pt; font-weight:600; text-decoration: underline;">Instructions</span>
-        <span style=" font-size:12pt; font-weight:600;">:</span>
-        </p><p align="justify">1. Choose to run A* or Genetic algorithm at a time.</p>
-        <p align="justify">2. When output appears on the top label, then click &lt;Next&gt; button </p>
-        <p align="justify">to view the images (for visual tracing) or use &lt;Auto Trace&gt;.</p>
-        <p align="justify">NOTE: Check if the folder &lt;states_images&gt; is created or not.</p>
-        <p align="justify">3. Click on &lt;RESET&gt; button to clear &lt;states_images&gt; folder.</p>
-        <p align="justify">Then run any algorithm again.</p>
-        <p align="justify"><span style=" font-weight:600; text-decoration: underline;">Dictionary:</span></p>
-        <p align="justify">1. Crossover type - SP (Single point), TP (Two point)</p>
-        <p align="justify">2. Parent selection - RS (Rank selection), RWS (Roulette wheel selection)</p>
-        <p align="justify">3. Elitism - Y (Yes), N (No)</p><p align="justify">ENJOY THE APP!</p></body></html>
-        '''
+        text = '''<html><head /><body>	<p align=\"justify\"><span style=\" font-size:16pt; font-weight:600; text-decoration:			underline;\">Instrucoes:</span><span style=\" font-size:12pt; font-weight:600;\">:</span></p>	<p align=\"justify\"><span style=\" font-size:12pt; font-weight:300; text-decoration: bold;\"></span>1. Escolha a quantidade de rainhas n.</p></body></html>'''
         self.ui.imageLabel.setText(_translate("MainWindow", text))
 
 
