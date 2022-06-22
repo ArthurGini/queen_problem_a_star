@@ -50,7 +50,6 @@ class Ui_MainWindow(object):
         self.prevButton.setSizePolicy(sizePolicy)
         self.prevButton.setObjectName("prevButton")
 
-        # FIXME
         self.outputLabel = QtWidgets.QLabel(self.centralwidget)
         self.outputLabel.setGeometry(QtCore.QRect(40, 10, 411, 31))
         self.outputLabel.setTextFormat(QtCore.Qt.RichText)

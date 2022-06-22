@@ -150,12 +150,6 @@ class RunAStarAlgorithm:
         print(f'Solution = {curr_state}')
         print(f'Time taken = {time_taken} seconds')
 
-        print(f'All Visited states: ')
-        print(*visited_states, sep='\n ')
-
-        print(f'curr_state  = {type(curr_state)}')
-        print(f'curr_state  = {curr_state}')
-
         return [steps, time_taken, goal_reached]
 
     @staticmethod
@@ -163,7 +157,7 @@ class RunAStarAlgorithm:
         """Function to plot the chess board along with the position of the queens."""
 
         N: int = len(positions)
-        board = np.zeros((N,N,3))
+        board = np.zeros((N-1,N-1,3))
         board += 0.5 # "Black" color. Can also be a sequence of r,g,b with values 0-1.
         board[::2, ::2] = 1 # "White" color
         board[1::2, 1::2] = 1 # "White" color

@@ -1,50 +1,21 @@
-# Arquivos:
+# A* aplicada: Problema das n Rainhas:
 
-**Kevin e Sorocaba**
-## A_star:
-### Classe:
-1. State(params)
-#### Funções:
+### Trabalho realizado:
+- Faculdade de Técnologia - UNICAMP
+- Disciplina: SI702A - Inteligência Artificial
+- Ministrada: Profa. Dra. Ana Estela Antunes da Silva
 
-### Classe:
-2. AStarAlgorithm(params)
-#### Funções:
-- run
-Função que executa o RunAStarAlgorithm
-### Classe:
-3. RunAStarAlgorithm(params)
-#### Funções:
+### Desenvolvido por:
+- Arthur Briganti Gini						RA: 213253
+- Henrique Arakaki Fonseca				RA: 236540
+- Kevin Miguel Chamadoira Mansano RA: 256638
+- Marcos Gabriel Nocetti Santos 	RA: 240820
+- Sabrina de Oliveira Cozentino 	RA: 244119
+- Wagner Ferreira Silva Junior 		RA: 245744
 
-**Arthur Gini aqui**
-## PA1:
-### Classe:
-1. MainWindow(params)
-#### Funções:
-- run_a_star(params)
-- stop_a_star_thread
-- show_a_star_results
-### Classe:
-2. AStarAlgorithmThread(params)
-#### Funções:
-- run_a_star(params)
-- stop_a_star_thread
-- show_a_star_results
-
-**Arthur Gini aqui**
-## MainUI:
-### Classe:
-1. Ui_MainWindow(params)
-#### Funções:
-- setupUi
-- retranslateUi
-
-
-Para a heuristica não admissivel colocar uma quantidade de rainhas maior que
-o tamanho do tabuleiro
-
-5 rainhas para um tabuleiro 4x4
-
-Colocar uma mensagem de erro na tela do usuario falando que a heuristica é impossivel
-
-
-Para isso add mais um campo de seleção
+## Resumo:
+Esse problema soluciona o problema das N rainhas (Queens problem).
+No jogo de xadrez a Rainha pode andar quantas casas quiser nas linhas horizontais, verticais e diagonais. \n
+O puzzle n-queens tem como objetivo colocar um número de rainhas num tabuleiro de xadrez, de tal forma que nenhuma das rainhas se ataquem.
+O ataque entre rainhas acontece quando duas ou mais rainhas se encontram na mesma linha, coluna ou diagonal do tabuleiro.
+Nesse contexto, o objetivo não é apenas colocar no tabuleiro as rainhas, mas sim criar o menor número possível de colisões entre as rainhas dando o menor número possível de passos, sendo um problema que pode ser resolvido utilizando o algoritmo A*.
